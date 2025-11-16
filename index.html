@@ -1,0 +1,1867 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Мемо-Взлом DELUXE - Скорость 15+ Кодов</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap');
+
+* { 
+    box-sizing: border-box; 
+    -webkit-user-select: none; 
+    -moz-user-select: none; 
+    user-select: none; 
+    margin: 0;
+    padding: 0;
+}
+
+html, body { 
+    width: 100%; 
+    height: 100%; 
+    overflow: hidden;
+}
+
+body { 
+    font-family: 'Space Mono', monospace;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a0a3d 50%, #0f0530 100%);
+    color: #00ff88;
+    text-align: center;
+    position: relative;
+    transition: all 0.3s;
+}
+
+body.light-theme {
+    background: linear-gradient(135deg, #f0f4ff 0%, #e8e0ff 50%, #f5f0ff 100%);
+    color: #333;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 200%;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(0, 255, 136, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255, 0, 200, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+    animation: gradientShift 8s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.03),
+        rgba(0, 0, 0, 0.03) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 999;
+    animation: scan 8s linear infinite;
+}
+
+@keyframes scan {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(10px); }
+}
+
+.falling-code {
+    display: none !important;
+}
+
+@keyframes flashGreen {
+    0% { 
+        background: rgba(0, 255, 100, 0);
+        box-shadow: inset 0 0 0 0 rgba(0, 255, 100, 0);
+    }
+    25% { 
+        background: rgba(0, 255, 100, 0.3);
+        box-shadow: inset 0 0 40px rgba(0, 255, 100, 0.8), 0 0 40px rgba(0, 255, 100, 0.6);
+    }
+    50% {
+        background: rgba(0, 255, 100, 0.2);
+        box-shadow: inset 0 0 30px rgba(0, 255, 100, 0.6), 0 0 30px rgba(0, 255, 100, 0.4);
+    }
+    100% { 
+        background: rgba(0, 255, 100, 0);
+        box-shadow: inset 0 0 0 0 rgba(0, 255, 100, 0);
+    }
+}
+
+@keyframes flashRed {
+    0% { 
+        background: rgba(255, 50, 50, 0);
+        box-shadow: inset 0 0 0 0 rgba(255, 50, 50, 0);
+    }
+    25% { 
+        background: rgba(255, 50, 50, 0.3);
+        box-shadow: inset 0 0 40px rgba(255, 50, 50, 0.8), 0 0 40px rgba(255, 50, 50, 0.6);
+    }
+    50% {
+        background: rgba(255, 50, 50, 0.2);
+        box-shadow: inset 0 0 30px rgba(255, 50, 50, 0.6), 0 0 30px rgba(255, 50, 50, 0.4);
+    }
+    100% { 
+        background: rgba(255, 50, 50, 0);
+        box-shadow: inset 0 0 0 0 rgba(255, 50, 50, 0);
+    }
+}
+
+@keyframes flashYellow {
+    0% { 
+        background: rgba(255, 255, 100, 0);
+        box-shadow: inset 0 0 0 0 rgba(255, 255, 100, 0);
+    }
+    25% { 
+        background: rgba(255, 255, 100, 0.3);
+        box-shadow: inset 0 0 40px rgba(255, 255, 100, 0.8), 0 0 40px rgba(255, 255, 100, 0.6);
+    }
+    50% {
+        background: rgba(255, 255, 100, 0.2);
+        box-shadow: inset 0 0 30px rgba(255, 255, 100, 0.6), 0 0 30px rgba(255, 255, 100, 0.4);
+    }
+    100% { 
+        background: rgba(255, 255, 100, 0);
+        box-shadow: inset 0 0 0 0 rgba(255, 255, 100, 0);
+    }
+}
+
+.success-flash {
+    animation: flashGreen 0.8s ease-out !important;
+}
+
+.error-flash {
+    animation: flashRed 0.8s ease-out !important;
+}
+
+.warning-flash {
+    animation: flashYellow 0.8s ease-out !important;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-8px) scale(1.1); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-scale {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.emoji-bounce { animation: bounce 1.2s ease-in-out infinite; }
+.emoji-spin { animation: spin 2s linear infinite; }
+.emoji-float { animation: float 3s ease-in-out infinite; }
+.emoji-pulse { animation: pulse-scale 1.5s ease-in-out infinite; }
+
+h1 { 
+    font-family: 'Orbitron', monospace;
+    font-size: 65px; 
+    font-weight: 900;
+    margin: 20px 0;
+    letter-spacing: 3px;
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    animation: titleFloat 3s ease-in-out infinite;
+    background: linear-gradient(135deg, #00ff88, #ff00c8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
+    filter: drop-shadow(0 0 10px rgba(0, 255, 136, 0.3)) drop-shadow(0 0 20px rgba(255, 0, 200, 0.2));
+}
+
+@keyframes titleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    bottom: 5px;
+    left: 0;
+    background: linear-gradient(90deg, transparent, #00ff88, #ff00c8, transparent);
+    animation: shimmer 2s ease-in-out infinite;
+    border-radius: 2px;
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 0.3; transform: scaleX(0.8); }
+    50% { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(50px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#levelSelectScreen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1500;
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.4s ease-out;
+    overflow-y: auto;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.level-box {
+    background: rgba(0, 50, 30, 0.9);
+    border: 2px solid #00ff88;
+    border-radius: 20px;
+    padding: 40px;
+    max-width: 900px;
+    text-align: center;
+    animation: levelSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin: 20px;
+}
+
+@keyframes levelSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) rotateX(20deg);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotateX(0);
+    }
+}
+
+.level-title {
+    font-size: 48px;
+    color: #00ff88;
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.level-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+.level-card {
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid #00ff88;
+    border-radius: 12px;
+    padding: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: cardPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+@keyframes cardPop {
+    0% { opacity: 0; transform: scale(0.8) rotateY(20deg); }
+    100% { opacity: 1; transform: scale(1) rotateY(0deg); }
+}
+
+.level-card:nth-child(1) { animation-delay: 0.05s; }
+.level-card:nth-child(2) { animation-delay: 0.1s; }
+.level-card:nth-child(3) { animation-delay: 0.15s; }
+.level-card:nth-child(4) { animation-delay: 0.2s; }
+.level-card:nth-child(5) { animation-delay: 0.25s; }
+
+.level-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1;
+}
+
+.level-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0, 255, 136, 0.3);
+    border-color: #ff00c8;
+    background: rgba(0, 50, 30, 0.5);
+}
+
+.level-card:hover::before {
+    opacity: 1;
+}
+
+.level-emoji {
+    font-size: 50px;
+    margin-bottom: 12px;
+    animation: bounce 1.2s ease-in-out infinite;
+}
+
+.level-card:nth-child(1) .level-emoji { animation: bounce 1.2s ease-in-out infinite; }
+.level-card:nth-child(2) .level-emoji { animation: bounce 1.2s ease-in-out infinite 0.1s; }
+.level-card:nth-child(3) .level-emoji { animation: bounce 1.2s ease-in-out infinite 0.2s; }
+.level-card:nth-child(4) .level-emoji { animation: spin 2s linear infinite; }
+.level-card:nth-child(5) .level-emoji { animation: pulse-scale 1.5s ease-in-out infinite; }
+
+.level-name {
+    font-size: 24px;
+    font-family: 'Orbitron', monospace;
+    font-weight: bold;
+    color: #00ff88;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.level-description {
+    font-size: 13px;
+    color: #00ff88;
+    margin-bottom: 12px;
+    opacity: 0.8;
+}
+
+.level-stats {
+    font-size: 11px;
+    color: #ffff00;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 255, 136, 0.2);
+}
+
+.stat-line {
+    margin: 3px 0;
+}
+
+.level-back {
+    font-size: 16px;
+    padding: 12px 28px;
+    background: rgba(0, 0, 0, 0.4);
+    color: #00ff88;
+    border: 2px solid #00ff88;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    font-family: 'Orbitron', monospace;
+    text-transform: uppercase;
+}
+
+.level-back:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 255, 136, 0.3);
+    background: rgba(0, 255, 136, 0.1);
+}
+
+#authScreen { 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.auth-box { 
+    width: 100%; 
+    max-width: 420px;
+    padding: 40px;
+    background: rgba(0, 20, 15, 0.95);
+    border: 2px solid #00ff88;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+    backdrop-filter: blur(10px);
+    animation: slideIn 0.8s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-50px) rotateX(20deg); }
+    to { opacity: 1; transform: translateY(0) rotateX(0); }
+}
+
+.auth-title { 
+    font-size: 40px;
+    background: linear-gradient(90deg, #ff00c8, #00ff88);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 30px;
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.auth-input { 
+    width: 100%; 
+    padding: 14px 16px; 
+    margin: 12px 0;
+    font-size: 15px;
+    background: rgba(0, 40, 20, 0.8);
+    color: #00ff88;
+    border: 2px solid #00ff88;
+    border-radius: 8px;
+    font-family: 'Space Mono', monospace;
+    transition: all 0.3s;
+}
+
+.auth-input:focus { 
+    outline: none;
+    border-color: #ff00c8;
+    box-shadow: 0 0 20px rgba(255, 0, 200, 0.4);
+    transform: scale(1.02);
+}
+
+.auth-btn { 
+    width: 100%;
+    padding: 14px;
+    margin: 10px 0;
+    font-size: 16px;
+    font-family: 'Orbitron', monospace;
+    background: linear-gradient(135deg, #00ff88, #00cc66);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    text-transform: uppercase;
+}
+
+.auth-btn:hover { 
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 255, 136, 0.4);
+}
+
+.auth-toggle { 
+    margin-top: 20px;
+    font-size: 13px;
+    color: #00ff88;
+}
+
+.auth-toggle a { 
+    color: #ffff00;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.auth-error { 
+    color: #ff6666;
+    font-size: 13px;
+    margin-top: 12px;
+}
+
+#mainMenuScreen { 
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 30px 20px;
+    position: relative;
+    z-index: 1;
+    overflow-y: auto;
+}
+
+.menu-container {
+    max-width: 1000px;
+    width: 100%;
+}
+
+.profile-card {
+    background: rgba(0, 40, 25, 0.85);
+    border: 2px solid #00ff88;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+    animation: slideUp 0.8s ease-out;
+    box-shadow: 0 5px 25px rgba(0, 255, 136, 0.2);
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.profile-info h2 {
+    font-size: 28px;
+    color: #ff00c8;
+    margin-bottom: 8px;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 25px;
+    font-size: 14px;
+    color: #00ff88;
+    flex-wrap: wrap;
+}
+
+.stat {
+    background: rgba(0, 255, 136, 0.08);
+    padding: 8px 16px;
+    border-radius: 6px;
+    border-left: 3px solid #00ff88;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.settings-btn {
+    font-size: 24px;
+    cursor: pointer;
+    background: rgba(0, 255, 136, 0.1);
+    border: 2px solid #00ff88;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.settings-btn:hover {
+    animation: spinFast 0.6s linear;
+}
+
+@keyframes spinFast {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.main-btn {
+    width: 100%;
+    padding: 35px;
+    font-size: 24px;
+    border: 2px solid #00ff88;
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 255, 136, 0.02));
+    color: #00ff88;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 15px 0;
+    animation: popIn 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 5px 20px rgba(0, 255, 136, 0.15);
+}
+
+@keyframes popIn {
+    0% { opacity: 0; transform: scale(0.85) rotateX(20deg); }
+    100% { opacity: 1; transform: scale(1) rotateX(0deg); }
+}
+
+.main-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 35px rgba(0, 255, 136, 0.4);
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 136, 0.08));
+}
+
+.leaderboard {
+    background: rgba(0, 40, 25, 0.85);
+    border: 2px solid #00ff88;
+    border-radius: 15px;
+    padding: 25px;
+    margin: 30px 0;
+    box-shadow: 0 5px 25px rgba(0, 255, 136, 0.15);
+    animation: slideUp 0.8s ease-out 0.15s both;
+}
+
+.leaderboard-title {
+    font-size: 28px;
+    color: #00ff88;
+    margin-bottom: 20px;
+    font-family: 'Orbitron', monospace;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.leaderboard-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.leaderboard-item {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 12px;
+    border-left: 3px solid #ff00c8;
+    border-radius: 8px;
+    text-align: left;
+    transition: all 0.3s;
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.leaderboard-item:hover {
+    transform: translateX(6px);
+    box-shadow: 0 5px 15px rgba(255, 0, 200, 0.3);
+    background: rgba(255, 0, 200, 0.08);
+}
+
+.rank-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff00c8, #ff6699);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 11px;
+    margin-bottom: 6px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+}
+
+.player-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.player-name {
+    color: #00ff88;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.player-fires {
+    color: #ff6400;
+    font-weight: bold;
+    font-size: 18px;
+    animation: fireGlow 2s ease-in-out infinite;
+}
+
+@keyframes fireGlow {
+    0%, 100% { text-shadow: 0 0 5px #ff6400; }
+    50% { text-shadow: 0 0 15px #ff6400, 0 0 25px #ff8800; }
+}
+
+/* ЗДЕСЬ ДОБАВЛЯЕМ ОТОБРАЖЕНИЕ ОГОНЬКОВ В ПРОФИЛЕ */
+.profile-fires-history {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid rgba(0, 255, 136, 0.2);
+    font-size: 16px;
+    color: #00ff88;
+}
+
+.fires-recent {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.fire-badge {
+    font-size: 20px;
+    padding: 4px 6px;
+    background: rgba(255, 100, 0, 0.15);
+    border-radius: 6px;
+    border: 1px solid #ff6400;
+    animation: fireGlow 2s ease-in-out infinite;
+}
+
+#terminal {
+    display: none;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid #00ff88;
+    font-size: 20px;
+    width: 95%;
+    max-width: 900px;
+    background: rgba(0, 40, 25, 0.9);
+    box-shadow: 0 5px 30px rgba(0, 255, 136, 0.3);
+    position: relative;
+    z-index: 1;
+    overflow-y: auto;
+    transition: all 0.1s;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #00ff88;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #00ff88, #ff00c8);
+    width: 100%;
+    transition: width 0.2s linear;
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
+}
+
+#command-to-remember {
+    font-size: 42px;
+    color: #ffff00;
+    font-weight: bold;
+    padding: 25px;
+    background: rgba(255, 0, 200, 0.12);
+    border: 2px solid #ff00c8;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    font-family: 'Space Mono', monospace;
+}
+
+#codesCounter {
+    font-size: 18px;
+    color: #00ff88;
+    font-weight: bold;
+    padding: 15px;
+    background: rgba(0, 255, 136, 0.1);
+    border: 2px solid #00ff88;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-family: 'Orbitron', monospace;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 10px;
+    text-align: center;
+    background: rgba(0, 40, 20, 0.9);
+    color: #00ff88;
+    border: 2px solid #00ff88;
+    margin: 15px 0;
+    font-family: 'Space Mono', monospace;
+    transition: all 0.1s;
+}
+
+input[type="text"]:focus {
+    outline: none;
+    border-color: #ff00c8;
+    box-shadow: 0 0 20px rgba(255, 0, 200, 0.3);
+}
+
+.game-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.game-btn {
+    font-size: 18px;
+    padding: 14px 35px;
+    border: 2px solid #00ff88;
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.15), rgba(0, 255, 136, 0.03));
+    color: #00ff88;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+
+.game-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 255, 136, 0.3);
+}
+
+.game-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.stats-display {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.stat-box {
+    background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 136, 0.08));
+    border: 2px solid #00ff88;
+    border-radius: 10px;
+    padding: 12px 20px;
+    color: #ffff00;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+}
+
+.fire-counter {
+    background: linear-gradient(135deg, rgba(255, 100, 0, 0.2), rgba(255, 100, 0, 0.08));
+    border: 2px solid #ff6400;
+    border-radius: 10px;
+    padding: 12px 20px;
+    color: #ff6400;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+
+.music-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 25px;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 100;
+    background: rgba(0, 255, 136, 0.2);
+    border: 2px solid #00ff88;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    animation: float 3s ease-in-out infinite;
+}
+
+.music-toggle:hover {
+    background: rgba(0, 255, 136, 0.4);
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+}
+
+#pauseMenu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    overflow-y: auto;
+}
+
+.pause-box {
+    background: rgba(0, 40, 25, 0.95);
+    border: 2px solid #ff00c8;
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 600px;
+    text-align: center;
+    animation: pauseSlideIn 0.3s ease-out;
+    margin: 20px;
+}
+
+@keyframes pauseSlideIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.pause-title {
+    font-size: 48px;
+    color: #ff00c8;
+    font-family: 'Orbitron', monospace;
+    font-weight: 900;
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+}
+
+.pause-tabs {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.pause-tab {
+    font-size: 16px;
+    padding: 12px 24px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #00ff88;
+    border: 2px solid #00ff88;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.pause-tab.active {
+    background: linear-gradient(135deg, #00ff88, #00cc66);
+    color: #000;
+    border-color: #ffff00;
+}
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+.settings-section {
+    text-align: left;
+    margin: 15px 0;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.settings-label {
+    font-size: 18px;
+    color: #00ff88;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.theme-toggle {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.theme-btn {
+    padding: 10px 20px;
+    border: 2px solid #00ff88;
+    background: rgba(0, 0, 0, 0.3);
+    color: #00ff88;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+    flex: 1;
+}
+
+.theme-btn.active {
+    background: linear-gradient(135deg, #00ff88, #00cc66);
+    color: #000;
+}
+
+.pause-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.pause-btn {
+    font-size: 16px;
+    padding: 14px 30px;
+    border: 2px solid #00ff88;
+    background: linear-gradient(135deg, #00ff88, #00cc66);
+    color: #000;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: all 0.3s;
+    flex: 1;
+}
+
+.pause-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 255, 136, 0.3);
+}
+
+.pause-btn.danger {
+    background: linear-gradient(135deg, #ff6666, #ff3333);
+    border-color: #ff3333;
+    color: #fff;
+}
+
+.pause-btn.danger:hover {
+    box-shadow: 0 8px 20px rgba(255, 50, 50, 0.4);
+}
+
+.warning-box {
+    background: rgba(255, 50, 50, 0.15);
+    border: 2px solid #ff6666;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    color: #ff6666;
+    font-size: 13px;
+}
+
+.logout-warning {
+    background: rgba(255, 100, 0, 0.15);
+    border: 2px solid #ff8800;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    color: #ff8800;
+    font-size: 13px;
+}
+
+#gameOverScreen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.result-box {
+    background: rgba(0, 40, 25, 0.95);
+    border: 2px solid #00ff88;
+    border-radius: 15px;
+    padding: 40px;
+    max-width: 600px;
+    animation: slideUp 0.8s ease-out;
+}
+
+.result-title {
+    font-size: 48px;
+    color: #00ff88;
+    font-weight: 900;
+    margin-bottom: 25px;
+}
+
+.result-score {
+    font-size: 44px;
+    color: #ff00c8;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.result-fires {
+    font-size: 42px;
+    color: #ff6400;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.result-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.result-btn {
+    font-size: 16px;
+    padding: 14px 30px;
+    border: 2px solid #00ff88;
+    background: linear-gradient(135deg, #00ff88, #00cc66);
+    color: #000;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.pause-icon {
+    position: fixed;
+    bottom: 30px;
+    left: 25px;
+    font-size: 36px;
+    cursor: pointer;
+    z-index: 100;
+    background: rgba(0, 40, 25, 0.9);
+    border: 2px solid #00ff88;
+    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: float 3s ease-in-out infinite;
+    transition: all 0.3s;
+}
+
+.pause-icon:hover {
+    transform: scale(1.1);
+    box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
+}
+
+#codesContainer { 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    z-index: 5; 
+    pointer-events: none;
+    display: none !important;
+}
+
+.stats-display.endless-mode {
+    display: flex !important;
+}
+
+.stats-display.endless-mode .stat-box {
+    display: none;
+}
+
+.stats-display.endless-mode .fire-counter {
+    display: none;
+}
+
+#lives.endless-lives {
+    font-size: 32px;
+    color: #00ff88;
+    font-weight: bold;
+    animation: pulse-scale 1.5s ease-in-out infinite;
+}
+
+@media (max-width: 768px) {
+    h1 { font-size: 48px; }
+    .level-box { padding: 25px; }
+    .pause-btn { padding: 12px 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═ АВТОРИЗАЦИЯ ═ -->
+<div id="authScreen">
+    <div class="auth-box">
+        <div class="auth-title">🔐 ВЗЛОМ</div>
+        <div id="loginForm">
+            <input type="text" id="loginUsername" class="auth-input" placeholder="Никнейм" maxlength="20">
+            <input type="password" id="loginPassword" class="auth-input" placeholder="Пароль">
+            <button class="auth-btn" onclick="login()">🔓 ВХОД</button>
+            <div class="auth-toggle">Нет аккаунта? <a onclick="showRegister()">Создать</a></div>
+            <div class="auth-error" id="loginError"></div>
+        </div>
+        <div id="registerForm" style="display:none;">
+            <input type="text" id="regUsername" class="auth-input" placeholder="Никнейм" maxlength="20">
+            <input type="password" id="regPassword" class="auth-input" placeholder="Пароль (мин 4)">
+            <input type="password" id="regPassword2" class="auth-input" placeholder="Повтори пароль">
+            <button class="auth-btn" onclick="register()">✍️ РЕГИСТРАЦИЯ</button>
+            <div class="auth-toggle">Есть аккаунт? <a onclick="showLogin()">Войти</a></div>
+            <div class="auth-error" id="regError"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ═ ВЫБОР УРОВНЕЙ ═ -->
+<div id="levelSelectScreen">
+    <div class="level-box">
+        <div class="level-title">⚡ ВЫБЕРИ УРОВЕНЬ</div>
+        <div class="level-selector">
+            <div class="level-card" onclick="selectLevel('easy')">
+                <div class="level-emoji">🟢</div>
+                <div class="level-name">ЛЕГКО</div>
+                <div class="level-description">Новичкам</div>
+                <div class="level-stats">
+                    <div class="stat-line">⏱️ 30 сек</div>
+                    <div class="stat-line">📝 Помнить</div>
+                </div>
+            </div>
+            <div class="level-card" onclick="selectLevel('normal')">
+                <div class="level-emoji">🟡</div>
+                <div class="level-name">НОРМАЛЬНО</div>
+                <div class="level-description">Баланс</div>
+                <div class="level-stats">
+                    <div class="stat-line">⏱️ 25 сек</div>
+                    <div class="stat-line">📝 Помнить</div>
+                </div>
+            </div>
+            <div class="level-card" onclick="selectLevel('hard')">
+                <div class="level-emoji">🔴</div>
+                <div class="level-name">СЛОЖНО</div>
+                <div class="level-description">Профи</div>
+                <div class="level-stats">
+                    <div class="stat-line">⏱️ 20 сек</div>
+                    <div class="stat-line">📝 Помнить</div>
+                </div>
+            </div>
+            <div class="level-card" onclick="selectLevel('speed')">
+                <div class="level-emoji">⚡</div>
+                <div class="level-name">СКОРОСТЬ</div>
+                <div class="level-description">Экстрим</div>
+                <div class="level-stats">
+                    <div class="stat-line">⏱️ 60 сек</div>
+                    <div class="stat-line">📝 15+ кодов</div>
+                </div>
+            </div>
+            <div class="level-card" onclick="selectLevel('endless')">
+                <div class="level-emoji">♾️</div>
+                <div class="level-name">РЕЖИМ</div>
+                <div class="level-description">Бесконечный</div>
+                <div class="level-stats">
+                    <div class="stat-line">⏱️ Без лимита</div>
+                    <div class="stat-line">❤️ Бесконечно</div>
+                </div>
+            </div>
+        </div>
+        <button class="level-back" onclick="backToMenu()">🏠 МЕНЮ</button>
+    </div>
+</div>
+
+<!-- ═ ГЛАВНОЕ МЕНЮ ═ -->
+<h1 id="mainTitle" style="display:none;">МЕМО <span class="emoji-spin">🔓</span> ВЗЛОМ</h1>
+
+<div id="mainMenuScreen">
+    <div class="menu-container">
+        <div class="profile-card">
+            <div class="profile-header">
+                <div class="profile-info">
+                    <h2>👤 <span id="userDisplay"></span></h2>
+                    <div class="profile-stats">
+                        <div class="stat">🔥 <span id="maxFiresDisplay">0</span></div>
+                        <div class="stat">🎮 <span id="gamesDisplay">0</span></div>
+                    </div>
+                </div>
+                <div class="header-buttons">
+                    <div class="settings-btn emoji-spin" onclick="openSettings()">⚙️</div>
+                </div>
+            </div>
+            <!-- ЗДЕСЬ ОТОБРАЖАЮТСЯ ОГОНЬКИ ПОСЛЕДНИХ ИГРЫ -->
+            <div class="profile-fires-history" id="firesHistoryContainer" style="display:none;">
+                <div style="color: #00ff88; font-size: 12px; margin-bottom: 8px;">Последние игры:</div>
+                <div class="fires-recent" id="firesBadgesContainer"></div>
+            </div>
+        </div>
+        <button class="main-btn" id="startGameBtn">🎮 НАЧАТЬ ИГРУ</button>
+        <div class="leaderboard">
+            <div class="leaderboard-title">🔥 <span class="emoji-bounce">ТОП-10</span></div>
+            <div class="leaderboard-list" id="leaderboardList"></div>
+        </div>
+    </div>
+</div>
+
+<!-- ═ ИГРА ═ -->
+<div id="terminal">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div id="command-to-remember">Команда</div>
+    <div id="codesCounter" style="display:none;"></div>
+    <input type="text" id="player-input" placeholder="Введи..." disabled>
+    <div class="game-buttons">
+        <button id="startBtn" class="game-btn">⚡ СТАРТ</button>
+        <button id="checkBtn" class="game-btn" style="display:none;">✅ ГОТОВО</button>
+    </div>
+    <div class="stats-display">
+        <div class="stat-box">Очки: <span id="score">0</span></div>
+        <div class="fire-counter">🔥<span id="fireCount">0</span></div>
+        <div class="stat-box">❤️ <span id="lives">3</span></div>
+        <div class="stat-box">⏱️ <span id="timer">0</span>s</div>
+    </div>
+</div>
+
+<!-- ═ НАСТРОЙКИ ═ -->
+<div id="pauseMenu">
+    <div class="pause-box">
+        <div class="pause-title">⚙️ НАСТРОЙКИ</div>
+        <div class="pause-tabs">
+            <button class="pause-tab active" onclick="switchPauseTab('theme')">🎨 ТЕМА</button>
+            <button class="pause-tab" onclick="switchPauseTab('game')">🎮 ИГРА</button>
+            <button class="pause-tab" onclick="switchPauseTab('account')">👤 АККАУНТ</button>
+        </div>
+
+        <div id="themeTab" class="tab-content active">
+            <div class="settings-section">
+                <div class="settings-label">🎨 ВЫБЕРИ ТЕМУ</div>
+                <div class="theme-toggle">
+                    <button class="theme-btn active" id="darkThemeBtn" onclick="setTheme('dark')">🌙</button>
+                    <button class="theme-btn" id="lightThemeBtn" onclick="setTheme('light')">☀️</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="gameTab" class="tab-content">
+            <div class="settings-section">
+                <div class="settings-label">🎮 УПРАВЛЕНИЕ</div>
+                <div style="color: #00ff88; font-size: 14px; line-height: 1.8;">
+                    Enter - отправить<br>
+                    Пауза - ⏸️ внизу<br>
+                    Музыка - 🔊 справа<br>
+                </div>
+            </div>
+        </div>
+
+        <div id="accountTab" class="tab-content">
+            <div class="settings-section">
+                <div class="settings-label">📊 ИНФОРМАЦИЯ</div>
+                <div style="color: #00ff88; font-size: 14px; line-height: 1.8;">
+                    Макс: <span id="settingsMaxFires">0</span> 🔥<br>
+                    Игр: <span id="settingsGames">0</span><br>
+                </div>
+            </div>
+            <div class="settings-section">
+                <div class="settings-label">🗑️ УДАЛИТЬ</div>
+                <div class="warning-box">⚠️ Необратимо!</div>
+                <button class="pause-btn danger" onclick="confirmDeleteAccount()">УДАЛИТЬ</button>
+            </div>
+            <div class="settings-section">
+                <div class="settings-label">🚪 ВЫХОД</div>
+                <div class="logout-warning">⚠️ Вы выйдете</div>
+                <button class="pause-btn danger" onclick="confirmLogout()">ВЫХОД</button>
+            </div>
+        </div>
+
+        <div class="pause-buttons">
+            <button class="pause-btn" onclick="resumeGame()">▶️ ПРОДОЛЖИТЬ</button>
+            <button class="pause-btn danger" onclick="exitToMenu()">🏠 МЕНЮ</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═ КОНЕЦ ИГРЫ ═ -->
+<div id="gameOverScreen">
+    <div class="result-box">
+        <div class="result-title">💀 КОНЕЦ</div>
+        <div class="result-score">Очки: <span id="finalScore">0</span></div>
+        <div class="result-fires">🔥 <span id="resultFires">0</span></div>
+        <div class="result-buttons">
+            <button id="restartBtn" class="result-btn">🎯 ЗАНОВО</button>
+            <button id="menuBtn" class="result-btn">🏠 МЕНЮ</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═ МУЗЫКА ═ -->
+<div class="music-toggle" id="musicToggle" onclick="toggleMusic()">🔊</div>
+
+<!-- ═ ПАУЗА ═ -->
+<div class="pause-icon" id="pauseIcon" style="display:none;" onclick="pauseGame()">⏸️</div>
+
+<!-- ═ КОДЫ ═ -->
+<div id="codesContainer"></div>
+
+<script>
+const commands = ['sudo hack --system', 'cd /root/memes', 'ls -la', 'sudo apt-get update', 'rm -rf school', 'cat secrets.txt', 'ping 228.228.228.228', 'decrypt -key LOL', 'sudo nano life.txt', 'open pizza.exe'];
+
+const codesByLevel = {
+    easy: ['01010', '11110', 'def h()', 'import', 'const x', 'print()', 'for i', 'if T', 'x=1', 'y=2'],
+    normal: ['def hack(x):', 'import sys', 'const x=[1]', 'for i in r():', 'if x==T:', 'return x', 'func()', 'class M:'],
+    hard: ['async ()=> {fetch}', 'def fac(n): r=1', 'function*g(){y 1}', 'SELECT * FROM', 'git rebase -i'],
+    speed: ['h', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'code', 'hack', '0', '1', 'for', 'if', 'def'],
+    endless: ['h', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'code', 'hack', '0', '1', 'def', 'import']
+};
+
+let audioContext = null;
+let musicPlaying = false;
+let currentLevel = null, currentLevelSettings = {}, currentUser = null, userData = null, currentTheme = 'dark';
+let score = 0, lives = 3, timer = 0, totalTime = 0, timerInterval = null, gameActive = false, paused = false, codeInterval = null;
+let speedCodesGenerated = [], speedCodesMatched = 0, selectedLevel = null;
+let gameStarted = false;
+
+currentUser = localStorage.getItem('currentUser');
+currentTheme = localStorage.getItem('theme') || 'dark';
+if (currentTheme === 'light') document.body.classList.add('light-theme');
+if (currentUser) { 
+    const users = JSON.parse(localStorage.getItem('memoUsers') || '{}'); 
+    userData = users[currentUser]; 
+    showMainMenu(); 
+}
+
+function updateProgressBar() {
+    if (currentLevel !== 'endless') {
+        const percentage = ((currentLevelSettings.time - timer) / currentLevelSettings.time) * 100;
+        document.getElementById('progressFill').style.width = percentage + '%';
+    }
+}
+
+function playSound(freq, duration, type='sine') {
+    try {
+        if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        osc.frequency.value = freq;
+        osc.type = type;
+        gain.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+        osc.start(audioContext.currentTime);
+        osc.stop(audioContext.currentTime + duration);
+    } catch (e) {}
+}
+
+function playSuccessSound() { playSound(523, 0.1); playSound(659, 0.1, 'square'); }
+function playErrorSound() { playSound(200, 0.2); playSound(150, 0.2, 'triangle'); }
+
+function playBackgroundMusic() {
+    if (musicPlaying) return;
+    try {
+        if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        musicPlaying = true;
+        const now = audioContext.currentTime;
+        const notes = [262, 294, 330, 349, 392, 440, 494, 523];
+        let time = now;
+        for (let i = 0; i < 100; i++) {
+            const osc = audioContext.createOscillator();
+            const gain = audioContext.createGain();
+            osc.connect(gain);
+            gain.connect(audioContext.destination);
+            osc.frequency.value = notes[Math.floor(Math.random() * notes.length)];
+            osc.type = 'sine';
+            gain.gain.setValueAtTime(0.05, time);
+            gain.gain.exponentialRampToValueAtTime(0.001, time + 0.5);
+            osc.start(time);
+            osc.stop(time + 0.5);
+            time += 0.3;
+        }
+    } catch (e) {}
+}
+
+function toggleMusic() {
+    if (musicPlaying) {
+        musicPlaying = false;
+        document.getElementById('musicToggle').textContent = '🔇';
+    } else {
+        playBackgroundMusic();
+        document.getElementById('musicToggle').textContent = '🔊';
+    }
+}
+
+function generateSpeedCode() {
+    const c = codesByLevel[currentLevel][Math.floor(Math.random()*codesByLevel[currentLevel].length)];
+    speedCodesGenerated.push(c);
+    return c;
+}
+
+function selectLevel(l) { 
+    selectedLevel = l;
+    currentLevel = l; 
+    const s = {
+        easy:{time:30,m:1},
+        normal:{time:25,m:1.5},
+        hard:{time:20,m:2},
+        speed:{time:60,m:3},
+        endless:{time:0,m:4}
+    }; 
+    currentLevelSettings = s[l]; 
+    document.getElementById('levelSelectScreen').style.display = 'none'; 
+    showGamePrepare();
+}
+
+function showGamePrepare() {
+    document.getElementById('mainMenuScreen').style.display = 'none';
+    document.getElementById('terminal').style.display = 'block';
+    document.getElementById('pauseIcon').style.display = 'flex';
+    document.getElementById('startBtn').style.display = 'inline-block';
+    document.getElementById('checkBtn').style.display = 'none';
+    document.getElementById('player-input').disabled = true;
+    document.getElementById('command-to-remember').textContent = `Готов к ${currentLevel.toUpperCase()}?`;
+    gameStarted = false;
+}
+
+function backToMenu() { 
+    document.getElementById('levelSelectScreen').style.display = 'none'; 
+    document.getElementById('mainMenuScreen').style.display = 'flex'; 
+}
+
+function showLogin() { 
+    document.getElementById('loginForm').style.display = 'block'; 
+    document.getElementById('registerForm').style.display = 'none'; 
+}
+
+function showRegister() { 
+    document.getElementById('loginForm').style.display = 'none'; 
+    document.getElementById('registerForm').style.display = 'block'; 
+}
+
+function register() { 
+    const u = document.getElementById('regUsername').value.trim(); 
+    const p = document.getElementById('regPassword').value; 
+    const p2 = document.getElementById('regPassword2').value; 
+    if (u.length<3 || p.length<4 || p!==p2) { 
+        document.getElementById('regError').textContent = '❌'; 
+        return; 
+    } 
+    const users = JSON.parse(localStorage.getItem('memoUsers')||'{}'); 
+    if (users[u]) { 
+        document.getElementById('regError').textContent = '❌'; 
+        return; 
+    } 
+    users[u] = {password:btoa(p), maxFires:0, gamesPlayed:0, fireHistory:[]}; 
+    localStorage.setItem('memoUsers', JSON.stringify(users)); 
+    document.getElementById('regError').textContent = '✅'; 
+    document.getElementById('regError').style.color = '#00ff00'; 
+    setTimeout(showLogin, 1000); 
+}
+
+function login() { 
+    const u = document.getElementById('loginUsername').value.trim(); 
+    const p = document.getElementById('loginPassword').value; 
+    if (!u||!p) return; 
+    const users = JSON.parse(localStorage.getItem('memoUsers')||'{}'); 
+    if (!users[u]||users[u].password!==btoa(p)) return; 
+    currentUser = u; 
+    userData = users[u]; 
+    localStorage.setItem('currentUser', u); 
+    showMainMenu(); 
+}
+
+function logout() { 
+    localStorage.removeItem('currentUser'); 
+    location.reload(); 
+}
+
+function updateFiresHistory() {
+    const container = document.getElementById('firesHistoryContainer');
+    const badgesContainer = document.getElementById('firesBadgesContainer');
+    
+    if (!userData.fireHistory || userData.fireHistory.length === 0) {
+        container.style.display = 'none';
+        return;
+    }
+    
+    container.style.display = 'block';
+    badgesContainer.innerHTML = '';
+    
+    // Показываем последние 10 игр
+    const recentGames = userData.fireHistory.slice(-10).reverse();
+    recentGames.forEach(fires => {
+        const badge = document.createElement('div');
+        badge.className = 'fire-badge';
+        badge.textContent = '🔥'.repeat(fires);
+        badgesContainer.appendChild(badge);
+    });
+}
+
+function showMainMenu() { 
+    document.getElementById('authScreen').style.display = 'none'; 
+    document.getElementById('mainMenuScreen').style.display = 'flex'; 
+    document.getElementById('mainTitle').style.display = 'block'; 
+    document.getElementById('userDisplay').textContent = currentUser; 
+    document.getElementById('maxFiresDisplay').textContent = userData.maxFires||0; 
+    document.getElementById('gamesDisplay').textContent = userData.gamesPlayed||0; 
+    updateFiresHistory();
+    updateLeaderboard(); 
+}
+
+function updateLeaderboard() { 
+    const users = JSON.parse(localStorage.getItem('memoUsers')||'{}'); 
+    const sorted = Object.entries(users).sort((a,b)=>(b[1].maxFires||0)-(a[1].maxFires||0)).slice(0,10); 
+    let html = ''; 
+    sorted.forEach((e,i)=>{
+        const[n,d]=e;
+        const f=d.maxFires||0;
+        html+=`<div class="leaderboard-item"><div class="rank-badge">#${i+1}</div><div class="player-info"><span class="player-name">${n}</span><span class="player-fires">${'🔥'.repeat(f)} (${f})</span></div></div>`;
+    }); 
+    document.getElementById('leaderboardList').innerHTML = html||'<div style="color:#ff6666;">Нет данных</div>'; 
+}
+
+function openSettings() { 
+    document.getElementById('pauseMenu').style.display = 'flex'; 
+    document.getElementById('settingsMaxFires').textContent = userData.maxFires||0; 
+    document.getElementById('settingsGames').textContent = userData.gamesPlayed||0; 
+}
+
+function closeSettings() { 
+    document.getElementById('pauseMenu').style.display = 'none'; 
+}
+
+function setTheme(t) { 
+    currentTheme = t; 
+    localStorage.setItem('theme', t); 
+    document.body.classList.toggle('light-theme', t==='light'); 
+    document.getElementById('darkThemeBtn').classList.toggle('active', t==='dark'); 
+    document.getElementById('lightThemeBtn').classList.toggle('active', t==='light'); 
+}
+
+function switchPauseTab(t) { 
+    document.querySelectorAll('.pause-tab').forEach(x=>x.classList.remove('active')); 
+    document.querySelectorAll('.tab-content').forEach(x=>x.classList.remove('active')); 
+    const idx = t==='theme'?0:t==='game'?1:2; 
+    document.querySelectorAll('.pause-tab')[idx].classList.add('active'); 
+    document.getElementById((t==='game'?'game':(t==='account'?'account':'theme'))+'Tab').classList.add('active'); 
+}
+
+function confirmDeleteAccount() { 
+    if (confirm('⚠️ ВНИМАНИЕ! Аккаунт удалён навсегда!\n\nВы уверены?')) { 
+        const users = JSON.parse(localStorage.getItem('memoUsers')||'{}'); 
+        delete users[currentUser]; 
+        localStorage.setItem('memoUsers', JSON.stringify(users)); 
+        localStorage.removeItem('currentUser'); 
+        location.reload(); 
+    } 
+}
+
+function confirmLogout() { 
+    if (confirm('⚠️ Вы выйдете из аккаунта?\n\nВы уверены?')) { 
+        logout(); 
+    } 
+}
+
+document.getElementById('startGameBtn').addEventListener('click', ()=>{ 
+    document.getElementById('mainMenuScreen').style.display = 'none'; 
+    document.getElementById('levelSelectScreen').style.display = 'flex'; 
+});
+
+document.getElementById('startBtn').onclick = ()=>{ 
+    if (gameStarted) return;
+    gameStarted = true;
+    gameActive = true;
+    paused = false;
+    score = 0;
+    lives = 3;
+    totalTime = 0;
+    speedCodesGenerated = [];
+    speedCodesMatched = 0;
+    document.getElementById('startBtn').style.display = 'none'; 
+    document.getElementById('checkBtn').style.display = 'inline-block'; 
+    document.getElementById('player-input').disabled = false; 
+    document.getElementById('score').textContent = '0'; 
+    document.getElementById('fireCount').textContent = '0'; 
+    document.getElementById('lives').textContent = '3'; 
+    
+    const statsDisplay = document.querySelector('.stats-display');
+    if (currentLevel === 'endless') {
+        statsDisplay.classList.add('endless-mode');
+        document.getElementById('lives').classList.add('endless-lives');
+        document.getElementById('lives').textContent = '♾️';
+    } else {
+        statsDisplay.classList.remove('endless-mode');
+        document.getElementById('lives').classList.remove('endless-lives');
+    }
+    
+    if (currentLevel === 'speed') { 
+        document.getElementById('codesCounter').style.display = 'block'; 
+        document.getElementById('codesCounter').textContent = '📝 Написано: 0/15'; 
+    } else { 
+        document.getElementById('codesCounter').style.display = 'none'; 
+    } 
+    if (currentLevel !== 'endless') { 
+        document.getElementById('timer').textContent = currentLevelSettings.time; 
+    } else { 
+        document.getElementById('timer').textContent = '0'; 
+    }
+    
+    if (currentLevel==='speed' || currentLevel==='endless') { 
+        nextSpeedRound(); 
+    } else { 
+        nextRound(); 
+    } 
+};
+
+document.getElementById('checkBtn').onclick = ()=>{ 
+    if (paused) return; 
+    const ans = document.getElementById('player-input').value.trim(); 
+    const terminal = document.getElementById('terminal'); 
+    if (currentLevel==='speed' || currentLevel==='endless') { 
+        if (speedCodesGenerated.includes(ans)) { 
+            speedCodesGenerated.splice(speedCodesGenerated.indexOf(ans), 1); 
+            speedCodesMatched++; 
+            playSuccessSound(); 
+            const pts = 50; 
+            score += pts; 
+            document.getElementById('fireCount').textContent = Math.floor(score/150); 
+            document.getElementById('score').textContent = score; 
+            terminal.classList.add('success-flash'); 
+            setTimeout(()=>terminal.classList.remove('success-flash'), 800); 
+            document.getElementById('player-input').value = ''; 
+            if (currentLevel==='speed') { 
+                document.getElementById('codesCounter').textContent = `📝 Написано: ${speedCodesMatched}/15`; 
+                if (speedCodesMatched >= 15 && timer > 0) { 
+                    terminal.classList.add('warning-flash'); 
+                    setTimeout(()=>{ 
+                        terminal.classList.remove('warning-flash'); 
+                    }, 800); 
+                } 
+            } 
+            nextSpeedRound(); 
+        } else { 
+            playErrorSound(); 
+            if (currentLevel !== 'endless') {
+                lives--; 
+                document.getElementById('lives').textContent = lives; 
+                terminal.classList.add('error-flash'); 
+                setTimeout(()=>terminal.classList.remove('error-flash'), 800); 
+                if (lives<=0) endGame(); 
+            } else {
+                terminal.classList.add('error-flash'); 
+                setTimeout(()=>terminal.classList.remove('error-flash'), 800); 
+            }
+        } 
+    } else { 
+        const cmd = document.getElementById('command-to-remember').textContent; 
+        if (ans===cmd) { 
+            playSuccessSound(); 
+            const pts = Math.round(150*currentLevelSettings.m); 
+            score += pts; 
+            document.getElementById('fireCount').textContent = Math.floor(score/150); 
+            document.getElementById('score').textContent = score; 
+            terminal.classList.add('success-flash'); 
+            setTimeout(()=>terminal.classList.remove('success-flash'), 800); 
+            clearInterval(timerInterval); 
+            nextRound(); 
+        } else { 
+            playErrorSound(); 
+            lives--; 
+            document.getElementById('lives').textContent = lives; 
+            terminal.classList.add('error-flash'); 
+            setTimeout(()=>terminal.classList.remove('error-flash'), 800); 
+            if (lives<=0) endGame(); 
+            else { 
+                clearInterval(timerInterval); 
+                setTimeout(nextRound, 500); 
+            } 
+        } 
+    } 
+};
+
+document.getElementById('player-input').addEventListener('keypress', (e)=>{ 
+    if (e.key==='Enter'&&gameActive&&!paused) document.getElementById('checkBtn').click(); 
+});
+
+function nextRound() { 
+    if (!gameActive||paused) return; 
+    const cmd = commands[Math.floor(Math.random()*commands.length)]; 
+    document.getElementById('command-to-remember').textContent = cmd; 
+    document.getElementById('player-input').value = ''; 
+    clearInterval(timerInterval); 
+    timer = currentLevelSettings.time; 
+    document.getElementById('timer').textContent = timer; 
+    updateProgressBar();
+    timerInterval = setInterval(()=>{ 
+        if (!gameActive||paused) return; 
+        timer--; 
+        document.getElementById('timer').textContent = timer; 
+        updateProgressBar(); 
+        if (timer<=0) { 
+            clearInterval(timerInterval); 
+            lives--; 
+            document.getElementById('lives').textContent = lives; 
+            if (lives<=0) endGame(); 
+            else setTimeout(() => nextRound(), 500); 
+        } 
+    }, 1000); 
+}
+
+function nextSpeedRound() { 
+    if (!gameActive||paused) return; 
+    const newCode = generateSpeedCode(); 
+    document.getElementById('command-to-remember').textContent = 'Коды: '+speedCodesGenerated.join(', '); 
+    document.getElementById('player-input').value = ''; 
+    if (currentLevel==='endless') { 
+        totalTime++; 
+        document.getElementById('timer').textContent = totalTime; 
+    } 
+}
+
+function endGame() { 
+    gameActive = false; 
+    gameStarted = false;
+    clearInterval(timerInterval); 
+    clearInterval(codeInterval); 
+    document.getElementById('terminal').style.display = 'none'; 
+    document.getElementById('pauseIcon').style.display = 'none'; 
+    document.getElementById('gameOverScreen').style.display = 'flex'; 
+    document.getElementById('finalScore').textContent = score; 
+    const fires = Math.floor(score/150); 
+    document.getElementById('resultFires').textContent = fires; 
+    const users = JSON.parse(localStorage.getItem('memoUsers')||'{}'); 
+    if (fires>(users[currentUser].maxFires||0)) users[currentUser].maxFires = fires; 
+    users[currentUser].gamesPlayed = (users[currentUser].gamesPlayed||0)+1; 
+    
+    // СОХРАНЯЕМ ОГОНЬКИ В ИСТОРИЮ
+    if (!users[currentUser].fireHistory) users[currentUser].fireHistory = [];
+    users[currentUser].fireHistory.push(fires);
+    
+    localStorage.setItem('memoUsers', JSON.stringify(users)); 
+}
+
+function pauseGame() { 
+    if (!gameActive) return; 
+    paused = true; 
+    clearInterval(timerInterval); 
+    clearInterval(codeInterval); 
+    document.getElementById('pauseMenu').style.display = 'flex'; 
+    document.getElementById('settingsMaxFires').textContent = userData.maxFires||0; 
+    document.getElementById('settingsGames').textContent = userData.gamesPlayed||0; 
+    switchPauseTab('theme'); 
+}
+
+function resumeGame() { 
+    paused = false; 
+    document.getElementById('pauseMenu').style.display = 'none'; 
+    if (gameActive) { 
+        if (currentLevel==='endless') { 
+            nextSpeedRound(); 
+        } else { 
+            nextRound(); 
+        } 
+    } 
+}
+
+function exitToMenu() { 
+    gameActive = false; 
+    gameStarted = false;
+    paused = false; 
+    clearInterval(timerInterval); 
+    clearInterval(codeInterval); 
+    document.getElementById('terminal').style.display = 'none'; 
+    document.getElementById('pauseMenu').style.display = 'none'; 
+    document.getElementById('pauseIcon').style.display = 'none'; 
+    document.getElementById('mainMenuScreen').style.display = 'flex'; 
+    updateLeaderboard(); 
+}
+
+document.getElementById('restartBtn').onclick = ()=>{ 
+    document.getElementById('gameOverScreen').style.display = 'none'; 
+    selectLevel(selectedLevel);
+};
+
+document.getElementById('menuBtn').onclick = ()=>{ 
+    document.getElementById('gameOverScreen').style.display = 'none'; 
+    showMainMenu(); 
+};
+</script>
+
+</body>
+</html>
