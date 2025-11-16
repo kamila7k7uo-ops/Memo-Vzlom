@@ -80,10 +80,6 @@ body::after {
     100% { transform: translateY(10px); }
 }
 
-.falling-code {
-    display: none !important;
-}
-
 @keyframes flashGreen {
     0% { 
         background: rgba(0, 255, 100, 0);
@@ -223,6 +219,11 @@ h1::after {
     to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
 #levelSelectScreen {
     display: none;
     position: fixed;
@@ -240,9 +241,21 @@ h1::after {
     overflow-y: auto;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+#mathDifficultyScreen {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1500;
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.4s ease-out;
+    overflow-y: auto;
 }
 
 .level-box {
@@ -305,6 +318,7 @@ h1::after {
 .level-card:nth-child(3) { animation-delay: 0.15s; }
 .level-card:nth-child(4) { animation-delay: 0.2s; }
 .level-card:nth-child(5) { animation-delay: 0.25s; }
+.level-card:nth-child(6) { animation-delay: 0.3s; }
 
 .level-card::before {
     content: '';
@@ -341,6 +355,7 @@ h1::after {
 .level-card:nth-child(3) .level-emoji { animation: bounce 1.2s ease-in-out infinite 0.2s; }
 .level-card:nth-child(4) .level-emoji { animation: spin 2s linear infinite; }
 .level-card:nth-child(5) .level-emoji { animation: pulse-scale 1.5s ease-in-out infinite; }
+.level-card:nth-child(6) .level-emoji { animation: pulse-scale 1.5s ease-in-out infinite 0.2s; }
 
 .level-name {
     font-size: 24px;
@@ -689,7 +704,6 @@ h1::after {
     50% { text-shadow: 0 0 15px #ff6400, 0 0 25px #ff8800; }
 }
 
-/* ЗДЕСЬ ДОБАВЛЯЕМ ОТОБРАЖЕНИЕ ОГОНЬКОВ В ПРОФИЛЕ */
 .profile-fires-history {
     margin-top: 15px;
     padding-top: 15px;
@@ -731,6 +745,23 @@ h1::after {
     transition: all 0.1s;
 }
 
+#mathTerminal {
+    display: none;
+    margin: 30px auto;
+    padding: 30px;
+    border-radius: 15px;
+    border: 2px solid #ffaa00;
+    font-size: 20px;
+    width: 95%;
+    max-width: 900px;
+    background: rgba(50, 30, 0, 0.9);
+    box-shadow: 0 5px 30px rgba(255, 170, 0, 0.3);
+    position: relative;
+    z-index: 1;
+    overflow-y: auto;
+    transition: all 0.1s;
+}
+
 .progress-bar {
     width: 100%;
     height: 8px;
@@ -749,6 +780,24 @@ h1::after {
     box-shadow: 0 0 10px rgba(0, 255, 136, 0.8);
 }
 
+.progress-bar-math {
+    width: 100%;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #ffaa00;
+    overflow: hidden;
+}
+
+.progress-fill-math {
+    height: 100%;
+    background: linear-gradient(90deg, #ffaa00, #ff6600);
+    width: 100%;
+    transition: width 0.2s linear;
+    box-shadow: 0 0 10px rgba(255, 170, 0, 0.8);
+}
+
 #command-to-remember {
     font-size: 42px;
     color: #ffff00;
@@ -756,6 +805,18 @@ h1::after {
     padding: 25px;
     background: rgba(255, 0, 200, 0.12);
     border: 2px solid #ff00c8;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    font-family: 'Space Mono', monospace;
+}
+
+#mathProblem {
+    font-size: 54px;
+    color: #ffff00;
+    font-weight: bold;
+    padding: 30px;
+    background: rgba(255, 170, 0, 0.12);
+    border: 2px solid #ffaa00;
     border-radius: 12px;
     margin-bottom: 25px;
     font-family: 'Space Mono', monospace;
@@ -773,7 +834,19 @@ h1::after {
     font-family: 'Orbitron', monospace;
 }
 
-input[type="text"] {
+#mathCounter {
+    font-size: 18px;
+    color: #ffaa00;
+    font-weight: bold;
+    padding: 15px;
+    background: rgba(255, 170, 0, 0.1);
+    border: 2px solid #ffaa00;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-family: 'Orbitron', monospace;
+}
+
+input[type="text"], input[type="number"] {
     width: 100%;
     padding: 14px;
     font-size: 18px;
@@ -787,10 +860,21 @@ input[type="text"] {
     transition: all 0.1s;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus, input[type="number"]:focus {
     outline: none;
     border-color: #ff00c8;
     box-shadow: 0 0 20px rgba(255, 0, 200, 0.3);
+}
+
+#mathInput {
+    background: rgba(50, 30, 0, 0.9);
+    color: #ffaa00;
+    border: 2px solid #ffaa00;
+}
+
+#mathInput:focus {
+    border-color: #ff6600;
+    box-shadow: 0 0 20px rgba(255, 102, 0, 0.3);
 }
 
 .game-buttons {
@@ -825,6 +909,39 @@ input[type="text"]:focus {
     cursor: not-allowed;
 }
 
+.math-btn {
+    border: 2px solid #ffaa00;
+    background: linear-gradient(135deg, rgba(255, 170, 0, 0.15), rgba(255, 170, 0, 0.03));
+    color: #ffaa00;
+}
+
+.math-btn:hover {
+    box-shadow: 0 8px 20px rgba(255, 170, 0, 0.3);
+}
+
+.time-extension-btn {
+    font-size: 16px;
+    padding: 12px 20px;
+    border: 2px solid #00cc00;
+    background: linear-gradient(135deg, rgba(0, 204, 0, 0.15), rgba(0, 204, 0, 0.03));
+    color: #00cc00;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: 'Orbitron', monospace;
+    transition: all 0.3s;
+}
+
+.time-extension-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 204, 0, 0.3);
+}
+
+.time-extension-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
 .stats-display {
     display: flex;
     gap: 15px;
@@ -841,6 +958,12 @@ input[type="text"]:focus {
     color: #ffff00;
     font-weight: bold;
     font-family: 'Orbitron', monospace;
+}
+
+.math-stat-box {
+    background: linear-gradient(135deg, rgba(255, 170, 0, 0.2), rgba(255, 170, 0, 0.08));
+    border: 2px solid #ffaa00;
+    color: #ffff00;
 }
 
 .fire-counter {
@@ -1245,14 +1368,72 @@ input[type="text"]:focus {
                     <div class="stat-line">❤️ Бесконечно</div>
                 </div>
             </div>
+            <div class="level-card" onclick="selectLevel('math')">
+                <div class="level-emoji">🧮</div>
+                <div class="level-name">МАТЕМАТИКА</div>
+                <div class="level-description">Примеры</div>
+                <div class="level-stats">
+                    <div class="stat-line">⏱️ Варьирует</div>
+                    <div class="stat-line">➕ Уровни</div>
+                </div>
+            </div>
         </div>
         <button class="level-back" onclick="backToMenu()">🏠 МЕНЮ</button>
     </div>
 </div>
 
+<!-- ═ ВЫБОР СЛОЖНОСТИ МАТЕМАТИКИ ═ -->
+<div id="mathDifficultyScreen">
+    <div class="level-box">
+        <div class="level-title">🧮 ВЫБЕРИ СЛОЖНОСТЬ</div>
+        <div class="level-selector">
+            <div class="level-card" onclick="selectMathDifficulty('easy')">
+                <div class="level-emoji">🟢</div>
+                <div class="level-name">ЛЕГКО</div>
+                <div class="level-description">Новичкам</div>
+                <div class="level-stats">
+                    <div class="stat-line">➕➖ Только</div>
+                    <div class="stat-line">⏱️ 60 сек</div>
+                    <div class="stat-line">📝 10 задач</div>
+                </div>
+            </div>
+            <div class="level-card" onclick="selectMathDifficulty('normal')">
+                <div class="level-emoji">🟡</div>
+                <div class="level-name">НОРМАЛЬНО</div>
+                <div class="level-description">Баланс</div>
+                <div class="level-stats">
+                    <div class="stat-line">✕÷ Добавлено</div>
+                    <div class="stat-line">⏱️ 60 сек</div>
+                    <div class="stat-line">📝 10 задач</div>
+                </div>
+            </div>
+            <div class="level-card" onclick="selectMathDifficulty('hard')">
+                <div class="level-emoji">🔴</div>
+                <div class="level-name">СЛОЖНО</div>
+                <div class="level-description">Профи</div>
+                <div class="level-stats">
+                    <div class="stat-line">^ Степени</div>
+                    <div class="stat-line">⏱️ 45 сек</div>
+                    <div class="stat-line">📝 15 задач</div>
+                </div>
+            </div>
+            <div class="level-card" onclick="selectMathDifficulty('extreme')">
+                <div class="level-emoji">⚡</div>
+                <div class="level-name">ЭКСТРИМ</div>
+                <div class="level-description">Боль</div>
+                <div class="level-stats">
+                    <div class="stat-line">ВСЕ ✕^</div>
+                    <div class="stat-line">⏱️ 30 сек</div>
+                    <div class="stat-line">📝 20 задач</div>
+                </div>
+            </div>
+        </div>
+        <button class="level-back" onclick="backToLevels()">🔙 НАЗАД</button>
+    </div>
+</div>
+
 <!-- ═ ГЛАВНОЕ МЕНЮ ═ -->
 <h1 id="mainTitle" style="display:none;">МЕМО <span class="emoji-spin">🔓</span> ВЗЛОМ</h1>
-
 <div id="mainMenuScreen">
     <div class="menu-container">
         <div class="profile-card">
@@ -1268,7 +1449,6 @@ input[type="text"]:focus {
                     <div class="settings-btn emoji-spin" onclick="openSettings()">⚙️</div>
                 </div>
             </div>
-            <!-- ЗДЕСЬ ОТОБРАЖАЮТСЯ ОГОНЬКИ ПОСЛЕДНИХ ИГРЫ -->
             <div class="profile-fires-history" id="firesHistoryContainer" style="display:none;">
                 <div style="color: #00ff88; font-size: 12px; margin-bottom: 8px;">Последние игры:</div>
                 <div class="fires-recent" id="firesBadgesContainer"></div>
@@ -1282,7 +1462,7 @@ input[type="text"]:focus {
     </div>
 </div>
 
-<!-- ═ ИГРА ═ -->
+<!-- ═ ИГРА (Коды) ═ -->
 <div id="terminal">
     <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
     <div id="command-to-remember">Команда</div>
@@ -1297,6 +1477,24 @@ input[type="text"]:focus {
         <div class="fire-counter">🔥<span id="fireCount">0</span></div>
         <div class="stat-box">❤️ <span id="lives">3</span></div>
         <div class="stat-box">⏱️ <span id="timer">0</span>s</div>
+    </div>
+</div>
+
+<!-- ═ МАТЕМАТИКА ═ -->
+<div id="mathTerminal">
+    <div class="progress-bar-math"><div class="progress-fill-math" id="mathProgressFill"></div></div>
+    <div id="mathProblem">5 + 3</div>
+    <div id="mathCounter" style="display:none;">Задача 1/10</div>
+    <input type="number" id="mathInput" placeholder="Ответ..." disabled>
+    <div class="game-buttons">
+        <button id="mathStartBtn" class="game-btn math-btn">⚡ СТАРТ</button>
+        <button id="mathCheckBtn" class="game-btn math-btn" style="display:none;">✅ ГОТОВО</button>
+        <button id="extendTimeBtn" class="time-extension-btn" style="display:none;" onclick="extendMathTime()">⏱️ +5 сек</button>
+    </div>
+    <div class="stats-display">
+        <div class="stat-box math-stat-box">Очки: <span id="mathScore">0</span></div>
+        <div class="stat-box math-stat-box">✓ <span id="mathCorrect">0</span>/10</div>
+        <div class="stat-box math-stat-box">⏱️ <span id="mathTimer">60</span>s</div>
     </div>
 </div>
 
@@ -1398,6 +1596,11 @@ let score = 0, lives = 3, timer = 0, totalTime = 0, timerInterval = null, gameAc
 let speedCodesGenerated = [], speedCodesMatched = 0, selectedLevel = null;
 let gameStarted = false;
 
+// Математика
+let mathDifficulty = null, mathGameActive = false, mathCorrect = 0, mathTotal = 0, mathScore = 0;
+let currentProblem = {}, mathTimer = 0, mathTimerInterval = null;
+let timeExtensionCooldown = 0;
+
 currentUser = localStorage.getItem('currentUser');
 currentTheme = localStorage.getItem('theme') || 'dark';
 if (currentTheme === 'light') document.body.classList.add('light-theme');
@@ -1407,6 +1610,255 @@ if (currentUser) {
     showMainMenu(); 
 }
 
+// ═══════════════════ МАТЕМАТИКА ═══════════════════
+function generateMathProblem() {
+    const settings = {
+        easy: { ops: ['+', '-'], max: 20 },
+        normal: { ops: ['+', '-', '*', '/'], max: 20 },
+        hard: { ops: ['+', '-', '*', '/', '^'], max: 15 },
+        extreme: { ops: ['+', '-', '*', '/', '^'], max: 25 }
+    };
+    const s = settings[mathDifficulty];
+    const op = s.ops[Math.floor(Math.random() * s.ops.length)];
+    const a = Math.floor(Math.random() * s.max) + 1;
+    const b = Math.floor(Math.random() * s.max) + 1;
+    
+    let answer, display;
+    if (op === '+') { answer = a + b; display = `${a} + ${b}`; }
+    else if (op === '-') { answer = a - b; display = `${a} - ${b}`; }
+    else if (op === '*') { answer = a * b; display = `${a} × ${b}`; }
+    else if (op === '/') { answer = Math.floor(a / b); display = `${a} ÷ ${b}`; }
+    else if (op === '^') { answer = Math.pow(a % 4 + 1, b % 4 + 1); display = `${a % 4 + 1} ^ ${b % 4 + 1}`; }
+    
+    return { a, b, op, answer, display };
+}
+
+function selectMathDifficulty(diff) {
+    mathDifficulty = diff;
+    const settings = {
+        easy: { time: 60, problems: 10 },
+        normal: { time: 60, problems: 10 },
+        hard: { time: 45, problems: 15 },
+        extreme: { time: 30, problems: 20 }
+    };
+    currentLevelSettings = settings[diff];
+    document.getElementById('mathDifficultyScreen').style.display = 'none';
+    showMathGamePrepare();
+}
+
+function backToLevels() {
+    document.getElementById('mathDifficultyScreen').style.display = 'none';
+    document.getElementById('levelSelectScreen').style.display = 'flex';
+}
+
+function showMathGamePrepare() {
+    document.getElementById('mainMenuScreen').style.display = 'none';
+    document.getElementById('mathTerminal').style.display = 'block';
+    document.getElementById('pauseIcon').style.display = 'flex';
+    document.getElementById('mathStartBtn').style.display = 'inline-block';
+    document.getElementById('mathCheckBtn').style.display = 'none';
+    document.getElementById('mathInput').disabled = true;
+    document.getElementById('mathInput').value = '';
+    document.getElementById('mathCounter').style.display = 'block';
+    document.getElementById('extendTimeBtn').style.display = 'none';
+    mathGameActive = false;
+}
+
+document.getElementById('mathStartBtn').onclick = () => {
+    if (mathGameActive) return;
+    mathGameActive = true;
+    gameActive = true;
+    paused = false;
+    mathCorrect = 0;
+    mathTotal = 0;
+    mathScore = 0;
+    timeExtensionCooldown = 0;
+    document.getElementById('mathStartBtn').style.display = 'none';
+    document.getElementById('mathCheckBtn').style.display = 'inline-block';
+    document.getElementById('mathInput').disabled = false;
+    document.getElementById('mathInput').focus();
+    document.getElementById('mathScore').textContent = '0';
+    document.getElementById('mathCorrect').textContent = '0/' + currentLevelSettings.problems;
+    document.getElementById('extendTimeBtn').style.display = 'inline-block';
+    mathTimer = currentLevelSettings.time;
+    document.getElementById('mathTimer').textContent = mathTimer;
+    
+    nextMathProblem();
+    startMathTimer();
+};
+
+function nextMathProblem() {
+    if (!mathGameActive || paused) return;
+    if (mathCorrect >= currentLevelSettings.problems) {
+        endMathGame();
+        return;
+    }
+    currentProblem = generateMathProblem();
+    document.getElementById('mathProblem').textContent = currentProblem.display;
+    document.getElementById('mathCounter').textContent = `Задача ${mathCorrect + 1}/${currentLevelSettings.problems}`;
+    document.getElementById('mathInput').value = '';
+    document.getElementById('mathInput').focus();
+}
+
+function startMathTimer() {
+    clearInterval(mathTimerInterval);
+    mathTimerInterval = setInterval(() => {
+        if (!gameActive || paused) return;
+        mathTimer--;
+        document.getElementById('mathTimer').textContent = mathTimer;
+        const percentage = (mathTimer / currentLevelSettings.time) * 100;
+        document.getElementById('mathProgressFill').style.width = percentage + '%';
+        if (mathTimer <= 0) {
+            endMathGame();
+        }
+    }, 1000);
+}
+
+function extendMathTime() {
+    if (timeExtensionCooldown > 0) return;
+    mathTimer += 5;
+    document.getElementById('mathTimer').textContent = mathTimer;
+    timeExtensionCooldown = 30;
+    document.getElementById('extendTimeBtn').disabled = true;
+    playSuccessSound();
+    
+    let cooldownLeft = 30;
+    const cooldownInterval = setInterval(() => {
+        cooldownLeft--;
+        if (cooldownLeft <= 0) {
+            document.getElementById('extendTimeBtn').disabled = false;
+            clearInterval(cooldownInterval);
+        }
+    }, 1000);
+}
+
+document.getElementById('mathCheckBtn').onclick = () => {
+    if (paused || !mathGameActive) return;
+    const answer = parseInt(document.getElementById('mathInput').value);
+    if (answer === currentProblem.answer) {
+        playSuccessSound();
+        mathCorrect++;
+        mathScore += 100;
+        document.getElementById('mathScore').textContent = mathScore;
+        document.getElementById('mathCorrect').textContent = mathCorrect + '/' + currentLevelSettings.problems;
+        document.getElementById('mathTerminal').classList.add('success-flash');
+        setTimeout(() => document.getElementById('mathTerminal').classList.remove('success-flash'), 800);
+        if (mathCorrect >= currentLevelSettings.problems) {
+            setTimeout(endMathGame, 500);
+        } else {
+            setTimeout(nextMathProblem, 500);
+        }
+    } else {
+        playErrorSound();
+        document.getElementById('mathTerminal').classList.add('error-flash');
+        setTimeout(() => document.getElementById('mathTerminal').classList.remove('error-flash'), 800);
+        document.getElementById('mathInput').value = '';
+    }
+};
+
+document.getElementById('mathInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter' && gameActive && !paused) document.getElementById('mathCheckBtn').click();
+});
+
+function endMathGame() {
+    gameActive = false;
+    mathGameActive = false;
+    clearInterval(mathTimerInterval);
+    document.getElementById('mathTerminal').style.display = 'none';
+    document.getElementById('pauseIcon').style.display = 'none';
+    document.getElementById('gameOverScreen').style.display = 'flex';
+    document.getElementById('finalScore').textContent = mathScore;
+    const fires = Math.floor(mathScore / 250);
+    document.getElementById('resultFires').textContent = fires;
+    const users = JSON.parse(localStorage.getItem('memoUsers') || '{}');
+    if (fires > (users[currentUser].maxFires || 0)) users[currentUser].maxFires = fires;
+    users[currentUser].gamesPlayed = (users[currentUser].gamesPlayed || 0) + 1;
+    if (!users[currentUser].fireHistory) users[currentUser].fireHistory = [];
+    users[currentUser].fireHistory.push(fires);
+    localStorage.setItem('memoUsers', JSON.stringify(users));
+}
+
+// ═══════════════════ ЛОГИН / РЕГИСТРАЦИЯ ═══════════════════
+function login() { 
+    const u = document.getElementById('loginUsername').value.trim(); 
+    const p = document.getElementById('loginPassword').value; 
+    
+    if (!u || !p) { 
+        document.getElementById('loginError').textContent = '❌ Заполните все поля'; 
+        document.getElementById('loginError').style.color = '#ff6666';
+        return; 
+    } 
+    
+    const users = JSON.parse(localStorage.getItem('memoUsers') || '{}'); 
+    
+    if (!users[u]) { 
+        document.getElementById('loginError').textContent = '❌ Пользователь не найден'; 
+        document.getElementById('loginError').style.color = '#ff6666';
+        return; 
+    }
+    
+    const storedPassword = users[u].password;
+    const enteredPassword = btoa(p);
+    
+    if (storedPassword !== enteredPassword) { 
+        document.getElementById('loginError').textContent = '❌ Неверный пароль'; 
+        document.getElementById('loginError').style.color = '#ff6666';
+        return; 
+    }
+    
+    currentUser = u; 
+    userData = users[u]; 
+    localStorage.setItem('currentUser', u); 
+    document.getElementById('loginError').textContent = '✅ Вход выполнен'; 
+    document.getElementById('loginError').style.color = '#00ff00';
+    setTimeout(() => showMainMenu(), 500);
+}
+
+function register() { 
+    const u = document.getElementById('regUsername').value.trim(); 
+    const p = document.getElementById('regPassword').value; 
+    const p2 = document.getElementById('regPassword2').value; 
+    
+    if (u.length < 3) { 
+        document.getElementById('regError').textContent = '❌ Никнейм минимум 3 символа'; 
+        document.getElementById('regError').style.color = '#ff6666';
+        return; 
+    }
+    
+    if (p.length < 4) { 
+        document.getElementById('regError').textContent = '❌ Пароль минимум 4 символа'; 
+        document.getElementById('regError').style.color = '#ff6666';
+        return; 
+    }
+    
+    if (p !== p2) { 
+        document.getElementById('regError').textContent = '❌ Пароли не совпадают'; 
+        document.getElementById('regError').style.color = '#ff6666';
+        return; 
+    }
+    
+    const users = JSON.parse(localStorage.getItem('memoUsers') || '{}'); 
+    
+    if (users[u]) { 
+        document.getElementById('regError').textContent = '❌ Пользователь уже существует'; 
+        document.getElementById('regError').style.color = '#ff6666';
+        return; 
+    } 
+    
+    users[u] = {
+        password: btoa(p), 
+        maxFires: 0, 
+        gamesPlayed: 0, 
+        fireHistory: []
+    }; 
+    
+    localStorage.setItem('memoUsers', JSON.stringify(users)); 
+    document.getElementById('regError').textContent = '✅ Аккаунт создан!'; 
+    document.getElementById('regError').style.color = '#00ff00'; 
+    setTimeout(showLogin, 1500); 
+}
+
+// ═══════════════════ ОСНОВНОЙ КОД ═══════════════════
 function updateProgressBar() {
     if (currentLevel !== 'endless') {
         const percentage = ((currentLevelSettings.time - timer) / currentLevelSettings.time) * 100;
@@ -1433,6 +1885,16 @@ function playSound(freq, duration, type='sine') {
 function playSuccessSound() { playSound(523, 0.1); playSound(659, 0.1, 'square'); }
 function playErrorSound() { playSound(200, 0.2); playSound(150, 0.2, 'triangle'); }
 
+function toggleMusic() {
+    if (musicPlaying) {
+        musicPlaying = false;
+        document.getElementById('musicToggle').textContent = '🔇';
+    } else {
+        playBackgroundMusic();
+        document.getElementById('musicToggle').textContent = '🔊';
+    }
+}
+
 function playBackgroundMusic() {
     if (musicPlaying) return;
     try {
@@ -1457,16 +1919,6 @@ function playBackgroundMusic() {
     } catch (e) {}
 }
 
-function toggleMusic() {
-    if (musicPlaying) {
-        musicPlaying = false;
-        document.getElementById('musicToggle').textContent = '🔇';
-    } else {
-        playBackgroundMusic();
-        document.getElementById('musicToggle').textContent = '🔊';
-    }
-}
-
 function generateSpeedCode() {
     const c = codesByLevel[currentLevel][Math.floor(Math.random()*codesByLevel[currentLevel].length)];
     speedCodesGenerated.push(c);
@@ -1474,6 +1926,11 @@ function generateSpeedCode() {
 }
 
 function selectLevel(l) { 
+    if (l === 'math') {
+        document.getElementById('levelSelectScreen').style.display = 'none';
+        document.getElementById('mathDifficultyScreen').style.display = 'flex';
+        return;
+    }
     selectedLevel = l;
     currentLevel = l; 
     const s = {
@@ -1514,38 +1971,6 @@ function showRegister() {
     document.getElementById('registerForm').style.display = 'block'; 
 }
 
-function register() { 
-    const u = document.getElementById('regUsername').value.trim(); 
-    const p = document.getElementById('regPassword').value; 
-    const p2 = document.getElementById('regPassword2').value; 
-    if (u.length<3 || p.length<4 || p!==p2) { 
-        document.getElementById('regError').textContent = '❌'; 
-        return; 
-    } 
-    const users = JSON.parse(localStorage.getItem('memoUsers')||'{}'); 
-    if (users[u]) { 
-        document.getElementById('regError').textContent = '❌'; 
-        return; 
-    } 
-    users[u] = {password:btoa(p), maxFires:0, gamesPlayed:0, fireHistory:[]}; 
-    localStorage.setItem('memoUsers', JSON.stringify(users)); 
-    document.getElementById('regError').textContent = '✅'; 
-    document.getElementById('regError').style.color = '#00ff00'; 
-    setTimeout(showLogin, 1000); 
-}
-
-function login() { 
-    const u = document.getElementById('loginUsername').value.trim(); 
-    const p = document.getElementById('loginPassword').value; 
-    if (!u||!p) return; 
-    const users = JSON.parse(localStorage.getItem('memoUsers')||'{}'); 
-    if (!users[u]||users[u].password!==btoa(p)) return; 
-    currentUser = u; 
-    userData = users[u]; 
-    localStorage.setItem('currentUser', u); 
-    showMainMenu(); 
-}
-
 function logout() { 
     localStorage.removeItem('currentUser'); 
     location.reload(); 
@@ -1563,7 +1988,6 @@ function updateFiresHistory() {
     container.style.display = 'block';
     badgesContainer.innerHTML = '';
     
-    // Показываем последние 10 игр
     const recentGames = userData.fireHistory.slice(-10).reverse();
     recentGames.forEach(fires => {
         const badge = document.createElement('div');
@@ -1580,7 +2004,7 @@ function showMainMenu() {
     document.getElementById('userDisplay').textContent = currentUser; 
     document.getElementById('maxFiresDisplay').textContent = userData.maxFires||0; 
     document.getElementById('gamesDisplay').textContent = userData.gamesPlayed||0; 
-    updateFiresHistory();
+    updateFiresHistory(); 
     updateLeaderboard(); 
 }
 
@@ -1623,7 +2047,7 @@ function switchPauseTab(t) {
 }
 
 function confirmDeleteAccount() { 
-    if (confirm('⚠️ ВНИМАНИЕ! Аккаунт удалён навсегда!\n\nВы уверены?')) { 
+    if (confirm('⚠️ ВНИМАНИЕ! Аккаунт удалён навсегда!\\n\\nВы уверены?')) { 
         const users = JSON.parse(localStorage.getItem('memoUsers')||'{}'); 
         delete users[currentUser]; 
         localStorage.setItem('memoUsers', JSON.stringify(users)); 
@@ -1633,7 +2057,7 @@ function confirmDeleteAccount() {
 }
 
 function confirmLogout() { 
-    if (confirm('⚠️ Вы выйдете из аккаунта?\n\nВы уверены?')) { 
+    if (confirm('⚠️ Вы выйдете из аккаунта?\\n\\nВы уверены?')) { 
         logout(); 
     } 
 }
@@ -1809,7 +2233,6 @@ function endGame() {
     if (fires>(users[currentUser].maxFires||0)) users[currentUser].maxFires = fires; 
     users[currentUser].gamesPlayed = (users[currentUser].gamesPlayed||0)+1; 
     
-    // СОХРАНЯЕМ ОГОНЬКИ В ИСТОРИЮ
     if (!users[currentUser].fireHistory) users[currentUser].fireHistory = [];
     users[currentUser].fireHistory.push(fires);
     
@@ -1821,18 +2244,21 @@ function pauseGame() {
     paused = true; 
     clearInterval(timerInterval); 
     clearInterval(codeInterval); 
+    clearInterval(mathTimerInterval);
     document.getElementById('pauseMenu').style.display = 'flex'; 
     document.getElementById('settingsMaxFires').textContent = userData.maxFires||0; 
     document.getElementById('settingsGames').textContent = userData.gamesPlayed||0; 
-    switchPauseTab('theme'); 
+    switchPauseTab('theme');
 }
 
 function resumeGame() { 
     paused = false; 
     document.getElementById('pauseMenu').style.display = 'none'; 
     if (gameActive) { 
-        if (currentLevel==='endless') { 
+        if (currentLevel==='endless' || currentLevel === 'speed') { 
             nextSpeedRound(); 
+        } else if (currentLevel === 'math') {
+            startMathTimer();
         } else { 
             nextRound(); 
         } 
@@ -1842,10 +2268,13 @@ function resumeGame() {
 function exitToMenu() { 
     gameActive = false; 
     gameStarted = false;
+    mathGameActive = false;
     paused = false; 
     clearInterval(timerInterval); 
     clearInterval(codeInterval); 
+    clearInterval(mathTimerInterval);
     document.getElementById('terminal').style.display = 'none'; 
+    document.getElementById('mathTerminal').style.display = 'none';
     document.getElementById('pauseMenu').style.display = 'none'; 
     document.getElementById('pauseIcon').style.display = 'none'; 
     document.getElementById('mainMenuScreen').style.display = 'flex'; 
@@ -1854,7 +2283,11 @@ function exitToMenu() {
 
 document.getElementById('restartBtn').onclick = ()=>{ 
     document.getElementById('gameOverScreen').style.display = 'none'; 
-    selectLevel(selectedLevel);
+    if (selectedLevel === 'math') {
+        document.getElementById('mathDifficultyScreen').style.display = 'flex';
+    } else {
+        selectLevel(selectedLevel);
+    }
 };
 
 document.getElementById('menuBtn').onclick = ()=>{ 
